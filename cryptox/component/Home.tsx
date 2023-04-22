@@ -1,69 +1,40 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import axios from 'axios';
 
-const { ethers } = require("ethers");
 export default function Home() {
-const [amount, setAmount] = useState('');
-const [receiver, setReceiver] = useState('');
-// ether logic
+    const [amount, setAmount] = useState<string>('');
+    const [receiver, setReceiver] = useState<string>('');
+    const [apiData, setApiData] = useState([])
 
-const provider = new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/fc531493ede94c64bab557ac727c9361`);
+    const objToPassInApi = {
+        amount,
+        receiver
+    }
 
-const account1 = '0xA0af072D705ee6fE3aEdA9A35Aa058ffD50de9e7'; // Your account address 1
-const account2 = '0x64040DD45739eb952B8003eF87D9C1d4F347De48'; // Your account address 2
+    const handleSend = () => {
+        //const acc2 = "0x64040DD45739eb952B8003eF87D9C1d4F347De48";
+        axios.post<{ data: any }>('http://192.168.1.72:3000/balances', objToPassInApi)
+            .then(({ data }) => setApiData(data))
+            .catch((err) => console.log(err));
+    };
 
-const privateKey1 = '40ad35b48889dec3f4691018817eda99be960831ecb23dc962fa7370d3b57909'; // Private key of account 1
-const wallet = new ethers.Wallet(privateKey1, provider);
-
-const main = async () => {
-  const senderBalanceBefore = await provider.getBalance(account1);
-  const receiverBalanceBefore = await provider.getBalance(account2);
-
-  console.log(`\nSender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`);
-  console.log(`Receiver balance before: ${ethers.utils.formatEther(receiverBalanceBefore)}\n`);
-
-  const gasPrice = ethers.utils.parseUnits("50", "gwei");
-  const tx = await wallet.sendTransaction({
-    to: account2,
-    value: ethers.utils.parseEther("0.0025"),
-    gasPrice: gasPrice,
-  });
-
-  await tx.wait();
-  console.log(`Transaction hash: ${tx.hash}`);
-  console.log(`Gas used: ${tx.gasLimit.toString()}`);
-  console.log(`Gas price: ${ethers.utils.formatUnits(gasPrice, "gwei")}`);
-
-  const senderBalanceAfter = await provider.getBalance(account1);
-  const receiverBalanceAfter = await provider.getBalance(account2);
-
-  console.log(`\nSender balance after: ${ethers.utils.formatEther(senderBalanceAfter)}`);
-  console.log(`Receiver balance after: ${ethers.utils.formatEther(receiverBalanceAfter)}\n`);
-};
-
-useEffect(()=>{
-    main()
-},[])
-
-//end ether logic
-
-
-const handleSend = ()=>{
-    Alert.alert(amount)
-}
     return (
         <View style={styles.container}>
             <Text style={styles.title}>CryptoX Wallet</Text>
-            <TextInput style={styles.input} placeholder='Enter Amount' onChangeText={(text)=> setAmount(text)} />
-            <TextInput style={styles.input} placeholder='Enter receiver id' onChangeText={(text)=> setReceiver(text)} />
-{/* 
-<Text>{`Sender balance before: ${ethers.utils.formatEther(senderBalanceBefore)}`}</Text> */}
+            <TextInput style={styles.input} placeholder='Enter Amount less than 0.0025' onChangeText={(text) => setAmount(text)} />
+            <TextInput style={styles.input} placeholder='Enter receiver id' onChangeText={(text) => setReceiver(text)} />
+
+            <Text>sender Balance Before: {apiData.senderBalanceBefore}</Text>
+            <Text>receiver Balance Before: {apiData.receiverBalanceeBefor}</Text>
+            <Text>sender Balance After: {apiData.senderBalanceAfter}</Text>
+            <Text>receiver Balance After: {apiData.receiverBalanceAfter}</Text>
 
             <TouchableOpacity style={styles.button} onPress={handleSend}>
                 <Text style={styles.buttonText}>Send</Text>
             </TouchableOpacity>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
