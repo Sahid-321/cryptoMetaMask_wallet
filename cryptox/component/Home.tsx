@@ -48,6 +48,7 @@ export default function Home() {
                     <Text>receiver Balance Before: {apiData.receiverBalanceeBefor}</Text>
                     <Text>sender Balance After: {apiData.senderBalanceAfter}</Text>
                     <Text>receiver Balance After: {apiData.receiverBalanceAfter}</Text>
+                    <Text>gasPrice: {apiData.gasPrice}</Text>
 
                 </View>}
 

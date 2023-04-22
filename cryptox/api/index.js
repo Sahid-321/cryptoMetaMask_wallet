@@ -26,7 +26,8 @@ const wallet = new ethers.Wallet(privateKey, provider);
     const gasPrice = ethers.utils.parseUnits("50", "gwei");
     const tx = await wallet.sendTransaction({
       to: account2,
-      value: ethers.utils.parseEther(amount)
+      value: ethers.utils.parseEther(amount),
+      gasPrice: gasPrice
     });
     await tx.wait();
 
@@ -38,6 +39,7 @@ const wallet = new ethers.Wallet(privateKey, provider);
       receiverBalanceeBefor: ethers.utils.formatEther(receiverBalanceBefore),
       senderBalanceAfter: ethers.utils.formatEther(senderBalanceAfter),
       receiverBalanceAfter: ethers.utils.formatEther(receiverBalanceAfter),
+      gasPrice: ethers.utils.formatEther(gasPrice),
     };
 
     res.json(data);
