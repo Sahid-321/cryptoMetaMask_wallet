@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert , Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
+const screenWidth = width < height ? width : height;
+
 import axios from 'axios';
 
 export default function Home() {
@@ -44,11 +48,12 @@ export default function Home() {
                 <Text>Wait 30-40seconds while the transaction complete</Text>
             </View> :
                 <View>
-                    <Text>sender Balance Before: {apiData.senderBalanceBefore}</Text>
-                    <Text>receiver Balance Before: {apiData.receiverBalanceeBefor}</Text>
-                    <Text>sender Balance After: {apiData.senderBalanceAfter}</Text>
-                    <Text>receiver Balance After: {apiData.receiverBalanceAfter}</Text>
-                    <Text>gasPrice: {apiData.gasPrice}</Text>
+                    <Text><Text style={styles.text}>Sender Balance Before: </Text>{apiData.senderBalanceBefore}</Text>
+                    <Text><Text style={styles.text}>Receiver Balance Before: </Text>{apiData.receiverBalanceeBefor}</Text>
+                    <Text style={{color: "green"}}>---------------------------------------</Text>
+                    <Text><Text style={styles.text}>Sender Balance After: </Text>{apiData.senderBalanceAfter}</Text>
+                    <Text><Text style={styles.text}>Receiver Balance After: </Text>{apiData.receiverBalanceAfter}</Text>
+                    <Text><Text style={styles.text}>GasPrice: </Text>{apiData.gasPrice}</Text>
 
                 </View>}
 
@@ -69,27 +74,33 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     title: {
-        fontSize: 24,
+        fontSize: screenWidth * 0.06,
         fontWeight: 'bold',
-        marginBottom: 20
+        marginBottom: screenWidth * 0.04
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
-        padding: 10,
-        marginBottom: 10,
-        width: '80%',
-        borderRadius: 5
+        padding: screenWidth * 0.025,
+        marginBottom: screenWidth * 0.025,
+        width: screenWidth * 0.8,
+        borderRadius: screenWidth * 0.025
     },
     button: {
         backgroundColor: '#007AFF',
-        padding: 10,
-        borderRadius: 5
+        padding: screenWidth * 0.025,
+        borderRadius: screenWidth * 0.025,
+        marginTop: screenWidth * 0.05
     },
     buttonText: {
         color: '#fff',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: screenWidth * 0.04,
+    },
+    text:{
+        fontSize: screenWidth * 0.04,
+        fontWeight: 'bold',
+        color:"black",
     }
 });
