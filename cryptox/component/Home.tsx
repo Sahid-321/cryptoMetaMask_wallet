@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert , Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 const screenWidth = width < height ? width : height;
@@ -48,12 +48,12 @@ export default function Home() {
                 <Text>Wait 30-40seconds while the transaction complete</Text>
             </View> :
                 <View>
-                    <Text><Text style={styles.text}>Sender Balance Before: </Text>{apiData.senderBalanceBefore}</Text>
-                    <Text><Text style={styles.text}>Receiver Balance Before: </Text>{apiData.receiverBalanceeBefor}</Text>
-                    <Text style={{color: "green"}}>---------------------------------------</Text>
-                    <Text><Text style={styles.text}>Sender Balance After: </Text>{apiData.senderBalanceAfter}</Text>
-                    <Text><Text style={styles.text}>Receiver Balance After: </Text>{apiData.receiverBalanceAfter}</Text>
-                    <Text><Text style={styles.text}>GasPrice: </Text>{apiData.gasPrice}</Text>
+                    <Text><Text style={[styles.text, { color:"orange"}]}>Sender Balance Before: </Text>{apiData.senderBalanceBefore}</Text>
+                    <Text><Text style={[styles.text, { color:"orange"}]}>Receiver Balance Before: </Text>{apiData.receiverBalanceeBefor}</Text>
+                    <Text style={{ color: "green" }}>---------------------------------------</Text>
+                    <Text><Text style={[styles.text, { color:"green"}]}>Sender Balance After: </Text>{apiData.senderBalanceAfter}</Text>
+                    <Text><Text style={[styles.text, { color:"green"}]}>Receiver Balance After: </Text>{apiData.receiverBalanceAfter}</Text>
+                    <Text><Text style={[styles.text, { color:"orange"}]}>GasPrice: </Text>{apiData.gasPrice}</Text>
 
                 </View>}
 
@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: screenWidth * 0.04,
     },
-    text:{
+    text: {
         fontSize: screenWidth * 0.04,
         fontWeight: 'bold',
-        color:"black",
+        color: "black",
     }
 });
