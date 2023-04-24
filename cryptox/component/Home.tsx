@@ -28,7 +28,7 @@ export default function Home() {
             const provider = await new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/fc531493ede94c64bab557ac727c9361`);
 
             const account1 = '0x64040DD45739eb952B8003eF87D9C1d4F347De48'; // Your account address 1
-            const account2 = receiver; // Your account address 2
+            const account2 = receiver; // Your account address 2 from input suggestion to put this account id "0xAe9Aa11cA2283Be956a8E299A2B578F59A55104E"
 
             const privateKey1 = '967bcdb3e507ec56e41a0e289a0582fb88e0466fcf89f388bb94147487e802e9'; // Private key of account 1
             const wallet = new ethers.Wallet(privateKey1, provider);
